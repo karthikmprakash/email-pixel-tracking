@@ -1,8 +1,13 @@
+import os
 import smtplib
+import sys
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 
-from app.config import settings
+sys.path.insert(
+    0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "app"))
+)
+from config import settings
 
 
 def send_test_email():
