@@ -2,12 +2,14 @@ import smtplib
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 
+from app.config import settings
+
 
 def send_test_email():
-    sender_email = "karthik@akaiketech.com"
-    receiver_email = "mkarthikprakash.work@gmail.com"
+    sender_email = settings.smtp_email
+    receiver_email = settings.receiver_email
     subject = "Test Email with Tracking Pixel"
-    tracking_pixel_url = f"http://127.0.0.1:8000/track/{receiver_email}"
+    tracking_pixel_url = f"{settings.server_url}/track/{receiver_email}"
 
     msg = MIMEMultipart("alternative")
     msg["Subject"] = subject
@@ -26,12 +28,10 @@ def send_test_email():
     part = MIMEText(html, "html")
     msg.attach(part)
 
-    with smtplib.SMTP("smtp.gmail.com", 587) as server:
+    with smtplib.SMTP(settings.smtp_server, 587) as server:
         server.starttls()
-        server.login("karthik@akaiketech.com", "imflrelwzlzsadzp")
-        server.sendmail(
-            "karthik@akaiketech.com", "mkarthikprakash.work@gmail.com", msg.as_string()
-        )
+        server.login(sender_email, settings.smtp_password)
+        server.sendmail(sender_email, receiver_email, msg.as_string())
 
 
 if __name__ == "__main__":
