@@ -1,5 +1,6 @@
 from fastapi import FastAPI
 
+from . import schemas
 from .database import Base, engine
 from .routers import tracking
 

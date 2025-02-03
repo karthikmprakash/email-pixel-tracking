@@ -1,3 +1,5 @@
+from typing import List
+
 from fastapi import APIRouter, HTTPException, Request, Response
 from loguru import logger
 from sqlalchemy import func
@@ -6,6 +8,8 @@ from sqlalchemy.orm import Session
 from app.config import settings
 from app.database import SessionLocal
 from app.models import TrackingEvent
+from app.schemas import TrackingEvent as TrackingEventSchema
+from app.schemas import TrackingEventCount
 from app.utils import get_image_bytes
 
 router = APIRouter()
@@ -36,7 +40,7 @@ async def track_email(email_id: str, request: Request):
         db.close()
 
 
-@router.get("/track_counts")
+@router.get("/track_counts", response_model=List[TrackingEventCount])
 async def get_track_counts():
     db: Session = SessionLocal()
     try:
