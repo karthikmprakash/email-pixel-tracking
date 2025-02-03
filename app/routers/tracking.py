@@ -1,7 +1,7 @@
 from pathlib import Path
 from typing import List
 
-from fastapi import APIRouter, HTTPException, Request, Response
+from fastapi import APIRouter, HTTPException, Request, Response, status
 from loguru import logger
 from sqlalchemy import func
 from sqlalchemy.orm import Session
@@ -32,7 +32,9 @@ async def track_email(email_id: str, request: Request):
         # Return a 1x1 transparent pixel
         path = Path(__file__).parent / "icon.png"
         icon = get_image_bytes(path)
-        return Response(content=icon, media_type="image/png")
+        return Response(
+            content=icon, media_type="image/png", status_code=status.HTTP_200_OK
+        )
     except Exception as e:
         logger.error(f"Error tracking email: {e}")
         logger.exception(e)
@@ -58,6 +60,9 @@ async def get_track_counts():
     except Exception as e:
         logger.error(f"Error getting track counts: {e}")
         logger.exception(e)
-        raise HTTPException(status_code=500, detail="Internal Server Error")
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail="Internal Server Error",
+        )
     finally:
         db.close()

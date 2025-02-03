@@ -1,22 +1,16 @@
-import os
 import smtplib
-import sys
+import time
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 
-sys.path.insert(
-    0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "app"))
-)
-from config import settings
+from app.config import settings
 
 
 def send_test_email():
     sender_email = settings.smtp_email
     receiver_email = settings.receiver_email
     subject = "Test Email with Tracking Pixel"
-    tracking_pixel_url = (
-        f"https://email-tracker.dokploy.karthikmprakash.online/track/{receiver_email}"
-    )
+    tracking_pixel_url = f"https://email-tracker.dokploy.karthikmprakash.online/track/{receiver_email}?t={int(time.time())}"
 
     msg = MIMEMultipart("alternative")
     msg["Subject"] = subject
@@ -27,7 +21,8 @@ def send_test_email():
     <html>
     <body>
         <p>This is a test email with a tracking pixel.</p>
-        <img src="{tracking_pixel_url}" alt="tracking pixel" style="display:none;">
+        <img src="{tracking_pixel_url}" alt="tracking pixel" width="50" height="50">
+        <a href="{tracking_pixel_url}">Click here to view the tracking pixel</a>
     </body>
     </html>
     """
