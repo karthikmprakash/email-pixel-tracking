@@ -1,3 +1,4 @@
+from pathlib import Path
 from typing import List
 
 from fastapi import APIRouter, HTTPException, Request, Response
@@ -29,7 +30,8 @@ async def track_email(email_id: str, request: Request):
         db.refresh(tracking_event)
 
         # Return a 1x1 transparent pixel
-        icon = get_image_bytes("icon.png")
+        path = Path(__file__).parent / "icon.png"
+        icon = get_image_bytes(path)
         return Response(content=icon, media_type="image/gif")
     except Exception as e:
         logger.error(f"Error tracking email: {e}")
