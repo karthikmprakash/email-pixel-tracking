@@ -123,9 +123,6 @@ dmypy.json
 # Streamlit
 .streamlit/
 
-# Docker
-docker-compose.yml
-Dockerfile
 
 # SQLite database
 *.db
