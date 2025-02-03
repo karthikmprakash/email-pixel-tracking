@@ -29,7 +29,7 @@ async def track_email(email_id: str, request: Request):
         db.refresh(tracking_event)
 
         # Return a 1x1 transparent pixel
-        icon = get_image_bytes("../assets/icon.png")
+        icon = get_image_bytes("icon.png")
         return Response(content=icon, media_type="image/gif")
     except Exception as e:
         logger.error(f"Error tracking email: {e}")
