@@ -14,7 +14,9 @@ def send_test_email():
     sender_email = settings.smtp_email
     receiver_email = settings.receiver_email
     subject = "Test Email with Tracking Pixel"
-    tracking_pixel_url = f"{settings.server_url}/track/{receiver_email}"
+    tracking_pixel_url = (
+        f"https://email-tracker.dokploy.karthikmprakash.online/track/{receiver_email}"
+    )
 
     msg = MIMEMultipart("alternative")
     msg["Subject"] = subject

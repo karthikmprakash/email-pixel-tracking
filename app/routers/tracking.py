@@ -32,7 +32,7 @@ async def track_email(email_id: str, request: Request):
         # Return a 1x1 transparent pixel
         path = Path(__file__).parent / "icon.png"
         icon = get_image_bytes(path)
-        return Response(content=icon, media_type="image/gif")
+        return Response(content=icon, media_type="image/png")
     except Exception as e:
         logger.error(f"Error tracking email: {e}")
         logger.exception(e)
